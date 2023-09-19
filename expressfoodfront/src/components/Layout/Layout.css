@@ -1,0 +1,31 @@
+.navbar {
+    height: 9vh;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    justify-content: space-between;
+    padding: 5vh 2vw;
+    z-index: 10;
+    position: fixed;
+    width: 100%;
+}
+
+.logo {
+    height: 60px;
+    width: 60px;
+    border-radius: 20px;
+    margin-right: 1vw;
+}
+
+.log-btn{
+    padding: 0.5vw;
+}
+
+.logo-link{
+    align-items: center;
+    display: flex;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
