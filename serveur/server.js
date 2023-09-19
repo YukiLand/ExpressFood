@@ -13,6 +13,7 @@ dotenv.config();
 process.env.TOKEN_SECRET;
 
 const Users = require("./core/route/Users");
+const Meal = require("./core/route/Meal");
 // const UserLocation = require('./core/route/UserLocation');
 // const UserPicture = require('./core/route/UserPicture');
 
@@ -29,7 +30,7 @@ app.use(express.json()); // for parsing application/json
 connectDB();
 
 app.use("/user", Users); // main route and after the /users we add the route from the Users.js file
-app.use("/meal");
+app.use("/meal", Meal);
 // app.use('/location', UserLocation); // main route and after the /location we add the route from the UserLocation.js file
 // app.use('/picture', UserPicture); // main route and after the /picture we add the route from the UserPicture.js file
 

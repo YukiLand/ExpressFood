@@ -16,6 +16,9 @@ const UserSchema = new mongoose.Schema({
   phonenumber: {
     type: String,
   },
+  postalAdress: {
+    type: String,
+  },
   role: {
     type: String,
     default: "customer",

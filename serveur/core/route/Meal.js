@@ -12,7 +12,7 @@ router.get("/test", (req, res) => {
   res.send("Hello World");
 });
 
-// @route POST /signup
+// @route POST /create
 router.post("/create", (req, res) => {
   // Check if the user exists
   MealEntity.findOne({
@@ -41,28 +41,41 @@ router.post("/create", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// @route POST /users/get
+// @route POST /meal/get
 router.post("/get", (req, res) => {
-  // Check if the user exists
-  MealEntity.findOne({
-    token: req.body.token,
-  })
-    .then((user) => {
-      if (!user) {
-        // if the user with this token does not exist in the database we return an error
-        return res.status(200).json({ tokennotfound: "Token not found" });
-      }
-      // else we return the user
-      let usrModified = {
-        firstname: user.firstname,
-        lastname: user.lastname,
-        email: user.email,
-        phonenumber: user.phonenumber,
-        role: user.role,
-      };
-      return res.status(200).json(usrModified);
+  // if body category is null we return all meals
+  if (req.body.category == null) {
+    MealEntity.find()
+      .then((meals) => {
+        if (!meals) {
+          return res.status(404).json({ message: "No meals found" });
+        }
+        return res.status(200).json(meals);
+      })
+      .catch((err) => console.log(err));
+  } else if (req.body.uuid != null) {
+    MealEntity.findOne({
+      uuid: req.body.uuid,
     })
-    .catch((err) => console.log(err));
+      .then((meal) => {
+        if (!meal) {
+          return res.status(404).json({ message: "No meal found" });
+        }
+        return res.status(200).json(meal);
+      })
+      .catch((err) => console.log(err));
+  } else {
+    MealEntity.find({
+      category: req.body.category,
+    })
+      .then((meals) => {
+        if (!meals) {
+          return res.status(404).json({ message: "No meals found" });
+        }
+        return res.status(200).json(meals);
+      })
+      .catch((err) => console.log(err));
+  }
 });
 
 // @route POST /users/update

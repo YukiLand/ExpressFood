@@ -58,6 +58,7 @@ router.post("/signup", (req, res) => {
         lastname: req.body.lastname,
         email: req.body.email,
         password: req.body.password,
+        uuid: crypto.randomUUID(),
       });
       newUser
         .save()
@@ -120,14 +121,11 @@ router.post("/update", (req, res) => {
         // if the user with this token does not exist in the database we return an error
         return res.status(200).json({ tokennotfound: "User not found" });
       }
-      console.log("firstname", req.body.firstname);
       // else we update the user
       switch (req.body.field) {
         case "email":
-          console.log("user._id :>> ", user._id);
           UsersEntity.updateOne({ _id: user._id }, { email: req.body.value })
             .then((user) => {
-              console.log("user updated");
               return res.status(200).json(user);
             })
             .catch((err) => console.log(err));
@@ -169,6 +167,28 @@ router.post("/delete", (req, res) => {
         .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
+});
+
+// route POST /users
+
+router.post("/all", (req, res) => {
+  UsersEntity.find().then((users) => {
+    if (!users) {
+      return res.status(404).json({ usersnotfound: "Users not found" });
+    }
+    let arr = [];
+    for (let user of users) {
+      let usrModified = {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        phonenumber: user.phonenumber,
+        role: user.role,
+      };
+      arr.push(usrModified);
+    }
+    return res.status(200).json(arr);
+  });
 });
 
 module.exports = router;
