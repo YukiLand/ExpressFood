@@ -9,37 +9,57 @@ Pour démarrer le backend :
 - Ouvrir un terminal et faire **npm i** pour installer tout les packages de nodes nécessaires au projet
 - Faire la commande **nodemon serveur.js** et le serveur devrait être démarré
 
-## Les API
+# Les API
 
-### User
+## User
 
-#### Inscription : POST http://localhost:8000/user/signup
-Body attendu : 
+### Inscription : POST http://localhost:8000/user/signup
+Body :
+```json
 {
     "firstname": "Antoine",
     "lastname": "Lecoffre",
     "email": "antoine.lecoffre@orange.fr",
     "password": "mmotdepassedetest"
 }
+```
 
-#### Renvoie un message pour dire que l'user à bien été créer
+### Renvoie un message pour dire que l'user à bien été créer
 
-Connexion : POST http://localhost:8000/user/login
-Body attendu :
+Connexion : **POST** http://localhost:8000/user/login
+Body :
+```json
 {
     "email": "antoine.lecoffre@orange.fr",
     "password": "mmotdepassedetest"
 }
+```
 
-#### Renvoie le token d'identification de l'utilisateur connecté
+Renvoie le token d'identification de l'utilisateur connecté
 
-Vérifier le token : POST http://localhost:8000/user/check/token
-Body attendu : 
+### Vérifier le token : POST http://localhost:8000/user/check/token
+Body : 
+```json
 {
     "token": "token"
 }
+```
 
-Renvoie une strucuture contenant des informations sur l'user
+Renvoie un message confirmant la validité ou non du token
+
+### Récuperer les infos d'un user : POST http://localhost:8000/user/get
+Body : 
+```json
+{
+    "token": "token"
+}
+```
+
+Renvoie les informations du user voulu
+
+
+
+
 
 
 
