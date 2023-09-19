@@ -57,6 +57,13 @@ Body :
 
 Renvoie les informations du user voulu
 
+### Récuperer les infos de tout les users : POST http://localhost:8000/user/all
+Body : 
+```json
+{}
+```
+
+Renvoie les informations de tout les users
 
 
 
