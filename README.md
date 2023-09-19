@@ -65,6 +65,62 @@ Body :
 
 Renvoie les informations de tout les users
 
+### Récuperer les uuid de tout les users (back only) : POST http://localhost:8000/user/all
+Body : 
+```json
+{}
+```
+
+Renvoie les noms, prénoms et uuid de tout les users
+
+### Supprimer un user : POST http://localhost:8000/user/delete
+Body : 
+```json
+{
+    uuid: ""
+}
+```
+
+Renvoie une confirmation de suppression
+
+## Meal
+
+### Créer un repas : POST http://localhost:8000/meal/create
+Body : 
+```json
+{
+    "name": "Poulet patate",
+    "description": "C'est un poulet qui met des patates",
+    "image": "https://static.750g.com/images/1200-630/6c696cbbf34e9d701b0dfa731283fa47/cuisses-de-poulet-et-pdt-au-four.jpg",
+    "category": "meal",
+    "price": "20 EUR"
+}
+```
+
+Renvoie une confirmation de création
+
+### Lister les repas : POST http://localhost:8000/meal/search
+Body : 
+```json
+{
+    "category": "desert" //Renvoie tout les désserts
+    "category": null     // Renvoie TOUT les repas
+                         // Si body vide renvoie TOUT les repas
+}
+```
+
+Renvoie la liste des repas concernés
+
+### Supprimer un repas : POST http://localhost:8000/meal/delete
+Body : 
+```json
+{
+    "uuid": ""
+}
+```
+
+Renvoie une confirmation de suppression
+
 
 
 
