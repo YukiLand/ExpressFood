@@ -24,9 +24,9 @@ Body :
 }
 ```
 
-### Renvoie un message pour dire que l'user à bien été créer
+Renvoie un message pour dire que l'user à bien été créer
 
-Connexion : **POST** http://localhost:8000/user/login
+### Connexion : **POST** http://localhost:8000/user/login
 Body :
 ```json
 {
