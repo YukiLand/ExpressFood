@@ -26,6 +26,9 @@ const UserSchema = new mongoose.Schema({
   token: {
     type: String,
   },
+  uuid: {
+    type: String,
+  },
   creationDate: {
     type: Date,
     default: Date.now,

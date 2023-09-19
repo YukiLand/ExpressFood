@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const generateToken = require("../utils/generateToken");
+const crypto = require("crypto");
 
 // Model User
 const UsersEntity = require("../entity/UserSchema");
@@ -21,16 +22,15 @@ router.post("/login", (req, res) => {
     .then((user) => {
       if (!user) {
         //if the user with this combination email/password does not exist in the database we return an error
-        return res.status(200).json({ usernotfound: "User not found" });
+        return res.status(200).json({ message: "User not found" });
       }
       const token = generateToken({
-        userId: user._id,
+        uuid: user.uuid,
         password: user.password,
       });
-      console.log("token :>> ", token);
 
       //update the user with the new token
-      UsersEntity.updateOne({ _id: user._id }, { token: token })
+      UsersEntity.updateOne({ uuid: user.uuid }, { token: token })
         .then((user) => {
           console.log("user updated");
         })
@@ -50,21 +50,24 @@ router.post("/signup", (req, res) => {
     .then((user) => {
       // We are checking if the user exists in the database
       if (user) {
-        return res.status(400).json({ userexists: "User already exists" });
+        return res.status(400).json({ message: "User already exists" });
       }
       // Create a new user
+      let uuid = crypto.randomUUID();
+      console.log("uuid :>> ", uuid);
       const newUser = new UsersEntity({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         password: req.body.password,
-        uuid: crypto.randomUUID(),
+        uuid: uuid,
       });
+
       newUser
         .save()
         .then((user) => res.json(user))
         .catch((err) => console.log(err));
-      return res.status(200).json({ usercreated: "User created" });
+      return res.status(200).json({ message: "User created" });
     })
     .catch((err) => console.log(err));
 });
@@ -78,10 +81,10 @@ router.post("/check/token", (req, res) => {
     .then((user) => {
       if (!user) {
         // if the user with this token does not exist in the database we return an error
-        return res.status(200).json({ tokennotfound: "Token not found" });
+        return res.status(200).json({ message: "Token not found" });
       }
       // else we return the token
-      return res.status(200).json({ tokenvalid: "Token valid" });
+      return res.status(200).json({ message: "Token valid" });
     })
     .catch((err) => console.log(err));
 });
@@ -95,7 +98,7 @@ router.post("/get", (req, res) => {
     .then((user) => {
       if (!user) {
         // if the user with this token does not exist in the database we return an error
-        return res.status(200).json({ tokennotfound: "Token not found" });
+        return res.status(200).json({ message: "Token not found" });
       }
       // else we return the user
       let usrModified = {
@@ -114,33 +117,23 @@ router.post("/get", (req, res) => {
 router.post("/update", (req, res) => {
   // Check if the user exists
   UsersEntity.findOne({
-    token: req.body.token,
+    uuid: req.body.uuid,
   })
     .then((user) => {
       if (!user) {
         // if the user with this token does not exist in the database we return an error
-        return res.status(200).json({ tokennotfound: "User not found" });
+        return res.status(200).json({ message: "User not found" });
       }
       // else we update the user
-      switch (req.body.field) {
-        case "email":
-          UsersEntity.updateOne({ _id: user._id }, { email: req.body.value })
-            .then((user) => {
-              return res.status(200).json(user);
-            })
-            .catch((err) => console.log(err));
-
-          break;
-        case "password":
-          UsersEntity.updateOne({ _id: user._id }, { password: req.body.value })
-            .then((user) => {
-              console.log("user updated");
-              return res.status(200).json(user);
-            })
-            .catch((err) => console.log(err));
-        default:
-          break;
-      }
+      let userModified = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        phonenumber: req.body.phonenumber,
+        role: req.body.role,
+        uuid: req.body.uuid,
+      };
+      UsersEntity.updateOne({ uuid: user.uuid }, userModified);
     })
     .catch((err) => console.log(err));
 });
@@ -170,7 +163,6 @@ router.post("/delete", (req, res) => {
 });
 
 // route POST /users
-
 router.post("/all", (req, res) => {
   UsersEntity.find().then((users) => {
     if (!users) {
@@ -184,6 +176,26 @@ router.post("/all", (req, res) => {
         email: user.email,
         phonenumber: user.phonenumber,
         role: user.role,
+      };
+      arr.push(usrModified);
+    }
+    return res.status(200).json(arr);
+  });
+});
+
+//Route POST /all/uuid
+
+router.post("/all/uuid", (req, res) => {
+  UsersEntity.find().then((users) => {
+    if (!users) {
+      return res.status(404).json({ usersnotfound: "Users not found" });
+    }
+    let arr = [];
+    for (let user of users) {
+      let usrModified = {
+        uuid: user.uuid,
+        firstname: user.firstname,
+        lastname: user.lastname,
       };
       arr.push(usrModified);
     }

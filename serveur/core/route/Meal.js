@@ -83,49 +83,42 @@ router.post("/update", (req, res) => {
   MealEntity.findOne({
     uuid: req.body.uuid,
   })
-    .then((user) => {
-      if (!user) {
-        return res.status(200).json({ tokennotfound: "User not found" });
+    .then((meal) => {
+      if (!meal) {
+        return res.status(200).json({ message: "Meal not found" });
       }
-      switch (req.body.field) {
-        case "email":
-          console.log("user._id :>> ", user._id);
-          MealEntity.updateOne({ _id: user._id }, { email: req.body.value })
-            .then((user) => {
-              console.log("user updated");
-              return res.status(200).json(user);
-            })
-            .catch((err) => console.log(err));
-
-          break;
-        case "password":
-          MealEntity.updateOne({ _id: user._id }, { password: req.body.value })
-            .then((user) => {
-              console.log("user updated");
-              return res.status(200).json(user);
-            })
-            .catch((err) => console.log(err));
-        default:
-          break;
-      }
+      let mealModified = {
+        uuid: req.body.uuid,
+        name: req.body.name,
+        description: req.body.description,
+        image: req.body.image,
+        category: req.body.category,
+        price: req.body.price,
+      };
+      MealEntity.updateOne({ uuid: meal.uuid, mealModified })
+        .then((meal) => {
+          console.log("Meal updated");
+          return res.status(200).json(meal);
+        })
+        .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 });
 
-// @route DELETE /users/delete
+// @route DELETE /meals/delete
 router.post("/delete", (req, res) => {
   MealEntity.findOne({
-    token: req.body.token,
+    uuid: req.body.uuid,
   })
-    .then((user) => {
-      if (!user) {
-        return res.status(200).json({ tokennotfound: "User not found" });
+    .then((meal) => {
+      if (!meal) {
+        return res.status(200).json({ message: "Meal not found" });
       }
-      MealEntity.deleteOne({ _id: user._id })
+      MealEntity.deleteOne({ uuid: meal.uuid })
 
-        .then((user) => {
-          console.log("user deleted");
-          return res.status(200).json(user);
+        .then((meal) => {
+          console.log("meal deleted");
+          return res.status(200).json(meal);
         })
         .catch((err) => console.log(err));
     })
