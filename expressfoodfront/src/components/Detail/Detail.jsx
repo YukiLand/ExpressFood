@@ -16,7 +16,7 @@ function Detail() {
 
     useEffect (() => {
         const getMeal = async () => {
-            const response = await fetch(`http://localhost:8000/meal/get`, {
+            const response = await fetch(`http://localhost:8000/meal/search`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
