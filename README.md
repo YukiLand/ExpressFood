@@ -103,6 +103,7 @@ Renvoie une confirmation de création
 Body : 
 ```json
 {
+    "uuid": "", // Renvoie LE plat concerné
     "category": "desert" //Renvoie tout les désserts
     "category": null     // Renvoie TOUT les repas
                          // Si body vide renvoie TOUT les repas
@@ -150,7 +151,7 @@ Body :
     "meal": [
             {
                 "name": "Poulet patate",
-                "uuid": "a6404d7a-22fb-4233-b445-ae28481df7aa",
+                "uuid": "a6404d7a-22fb-4233-b445-ae28481df7aa", // uuid du plat
                 "description": "C'est un poulet qui met des patates",
                 "image": "https://static.750g.com/images/1200-630/6c696cbbf34e9d701b0dfa731283fa47/cuisses-de-poulet-et-pdt-au-four.jpg",
                 "category": "meal",
@@ -159,6 +160,7 @@ Body :
             },
             {
                 "name": "Poulet pas patate",
+                "uuid": "", // uuid du plat
                 "description": "C'est un poulet avec des haricots verts",
                 "image": "https://static.750g.com/images/1200-630/6c696cbbf34e9d701b0dfa731283fa47/cuisses-de-poulet-et-pdt-au-four.jpg",
                 "category": "meal",
