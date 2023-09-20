@@ -121,6 +121,64 @@ Body :
 
 Renvoie une confirmation de suppression
 
+## Order
+
+### Créer une commande : POST http://localhost:8000/order/create
+Body : 
+```json
+{
+    "customer_uuid": "589af341-4a3a-4d7d-a8f5-469c3c9b896b",
+    "meal": [
+                {
+                    "name": "Poulet patate",
+                    "description": "C'est un poulet qui met des patates",
+                    "image": "https://static.750g.com/images/1200-630/6c696cbbf34e9d701b0dfa731283fa47/cuisses-de-poulet-et-pdt-au-four.jpg",
+                    "category": "meal",
+                    "price": "20 EUR"
+                }    
+        ]
+}
+```
+
+### Editer une commande : POST http://localhost:8000/order/update
+Body : 
+```json
+{
+    "uuid": "48c56f26-2409-4ee8-bdb5-e09613925409", // uuid de la commande déjà créer
+    "customerUUID": "589af341-4a3a-4d7d-a8f5-469c3c9b896b", // uuid du client qui passe la commande
+    "status": "Validated", // statut à faire évoluer au fil de la commande
+    "meal": [
+            {
+                "name": "Poulet patate",
+                "uuid": "a6404d7a-22fb-4233-b445-ae28481df7aa",
+                "description": "C'est un poulet qui met des patates",
+                "image": "https://static.750g.com/images/1200-630/6c696cbbf34e9d701b0dfa731283fa47/cuisses-de-poulet-et-pdt-au-four.jpg",
+                "category": "meal",
+                "quantity": 1,
+                "price": "20 EUR"
+            },
+            {
+                "name": "Poulet pas patate",
+                "description": "C'est un poulet avec des haricots verts",
+                "image": "https://static.750g.com/images/1200-630/6c696cbbf34e9d701b0dfa731283fa47/cuisses-de-poulet-et-pdt-au-four.jpg",
+                "category": "meal",
+                "quantity": 2,
+                "price": "15 EUR"
+            }
+    ]
+}
+```
+
+
+
+### Supprimer une commande : POST http://localhost:8000/order/delete
+Body : 
+```json
+{
+    "uuid": ""
+}
+```
+
 
 
 
