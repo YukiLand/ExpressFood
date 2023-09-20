@@ -9,31 +9,49 @@ import { Link } from "react-router-dom";
 import { Button } from '@mui/material';
 
 import "./Product.css";
+import { useEffect, useState } from 'react';
 
 function Product() {
+
+    const [products, setProducts] = useState([]);
+
+    useEffect (() => {
+        async function getProducts() {
+            const response = await fetch('http://localhost:8000/meal/get', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            const data = await response.json();
+            setProducts(data);
+        }
+        getProducts();
+    }, [])
+
+    console.log(products);
 
     return (
         <div className="product">
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container columns={{ xs: 1, sm: 8, md: 12 }}>
-                    {Array.from(Array(4)).map((_, index) => (
+                    {products.map((meal, index) => (
                         <Grid spacing={2} className='grid-card' xs={1} sm={4} md={6} key={index}>
                             <Card sx={{ maxWidth: 345 }}>
-                                <CardMedia component="img" sx={{ maxHeight: 200 }} image="/src/assets/desc1.jpg" />
+                                <CardMedia component="img" sx={{ maxHeight: 200 }} image={ meal.image } />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
-                                        Lizard
+                                        {meal.name}
                                     </Typography>
                                     <Typography variant="body1" color="text.secondary">
-                                        9.99€
+                                        {meal.price}
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
-                                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                                        species, ranging across all continents except Antarctica
+                                        {meal.description}
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Link to="/detail"><Button  size="small">Commander</Button></Link>
+                                    <Link to={`/detail/${meal.uuid}`}><Button  size="small">Commander</Button></Link>
                                 </CardActions>
                             </Card>
                         </Grid>
