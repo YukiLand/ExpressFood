@@ -1,20 +1,28 @@
 const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
-  customer_id: {
+  customer_uuid: {
     type: String,
   },
-  employee_id: {
+  employee_uuid: {
     type: String,
   },
   meal: {
-    type: String,
+    type: Array,
   },
   orderDate: {
     type: String,
   },
+  creationDate: {
+    type: String,
+    default: Date.now,
+  },
+  uuid: {
+    type: String,
+  },
   status: {
     type: String,
+    default: "creationInProgress",
   },
 });
 

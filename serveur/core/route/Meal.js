@@ -41,8 +41,8 @@ router.post("/create", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// @route POST /meal/get
-router.post("/get", (req, res) => {
+// @route POST /meal/search
+router.post("/search", (req, res) => {
   // if body category is null we return all meals
   if (req.body.category == null) {
     MealEntity.find()

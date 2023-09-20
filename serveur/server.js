@@ -14,6 +14,7 @@ process.env.TOKEN_SECRET;
 
 const Users = require("./core/route/Users");
 const Meal = require("./core/route/Meal");
+const Order = require("./core/route/Order");
 // const UserLocation = require('./core/route/UserLocation');
 // const UserPicture = require('./core/route/UserPicture');
 
@@ -31,9 +32,7 @@ connectDB();
 
 app.use("/user", Users); // main route and after the /users we add the route from the Users.js file
 app.use("/meal", Meal);
-// app.use('/location', UserLocation); // main route and after the /location we add the route from the UserLocation.js file
-// app.use('/picture', UserPicture); // main route and after the /picture we add the route from the UserPicture.js file
-
+app.use("/order", Order);
 app.listen(8000, () => {
   console.log("Server started on port 8000");
 });
