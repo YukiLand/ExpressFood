@@ -103,6 +103,7 @@ Renvoie une confirmation de création
 Body : 
 ```json
 {
+    "uuid": "", // Renvoie LE plat concerné
     "category": "desert" //Renvoie tout les désserts
     "category": null     // Renvoie TOUT les repas
                          // Si body vide renvoie TOUT les repas
