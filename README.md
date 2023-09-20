@@ -19,7 +19,7 @@ Pour démarrer le backend :
     "lastname": "Lecoffre", // A saisir via le front
     "email": "antoine.lecoffre@orange.fr", // A saisir via le front
     "password": "mmotdepassedetest",  // A saisir via le front
-    "phonenumber" "+335654415421", // A saisir via le front
+    "phonenumber": "+335654415421", // A saisir via le front
     "postalAdress": "20 rue de la paix, 33000 Bordeaux", // A saisir via le front
     "role": "customer", // auto généré par le back, si on souhaite le changer -> changement directement en bdd pour transiter de customer à admin
     "token": "adaz4dc65az4fdae4f65aze4f5zea4f65fd4ez6fze4fze4fz6e", // auto généré par le back
