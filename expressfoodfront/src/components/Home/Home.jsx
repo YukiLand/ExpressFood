@@ -2,7 +2,6 @@ import "./Home.css";
 import banner from "../../assets/banner.jpg";
 
 import Divider from '@mui/material/Divider';
-import Chip from '@mui/material/Chip';
 
 
 function Home() {
