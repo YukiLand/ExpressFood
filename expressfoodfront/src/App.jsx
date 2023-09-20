@@ -11,6 +11,8 @@ const darkTheme = createTheme({
 import './App.css'
 import Layout from './components/Layout/Layout'
 import Home from './components/Home/Home'
+import Product from './components/Product/Product'
+import Detail from './components/Detail/Detail';
 
 
 function App() {
@@ -22,7 +24,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />} >
             <Route index element={<Home />} />
-            {/* <Route path="about" element={<About />} /> */}
+            <Route path="/product" element={<Product />} />
+            <Route path="/detail/:id" element={<Detail />} />
           </Route>
         </Routes>
       </BrowserRouter>

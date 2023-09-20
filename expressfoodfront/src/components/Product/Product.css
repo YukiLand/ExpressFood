@@ -1,0 +1,11 @@
+.product{
+    padding-top: 15vh;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.grid-card{
+    margin: 2vh 0;
+    justify-content: center;
+    display: flex;
+}
