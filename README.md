@@ -9,6 +9,61 @@ Pour démarrer le backend :
 - Ouvrir un terminal et faire **npm i** pour installer tout les packages de nodes nécessaires au projet
 - Faire la commande **nodemon server.js** et le serveur devrait être démarré
 
+  
+# Les entités
+
+## User
+```json
+{
+    "firstname": "Antoine", // A saisir via le front
+    "lastname": "Lecoffre", // A saisir via le front
+    "email": "antoine.lecoffre@orange.fr", // A saisir via le front
+    "password": "mmotdepassedetest",  // A saisir via le front
+    "phonenumber": "+335654415421", // A saisir via le front
+    "postalAdress": "20 rue de la paix, 33000 Bordeaux", // A saisir via le front
+    "role": "customer", // auto généré par le back, si on souhaite le changer -> changement directement en bdd pour transiter de customer à admin
+    "token": "adaz4dc65az4fdae4f65aze4f5zea4f65fd4ez6fze4fze4fz6e", // auto généré par le back
+    "uuid": "zefezfze-fezgvf-devbez-fgze45fze", // auto généré par le back
+    "creationDate": "2023/09/20", // auto généré par le back
+}
+```
+
+## Meal
+```json
+{
+    "uuid": "zefezfze-fezgvf-devbez-fgze45fze", // auto généré par le back
+    "name": "Poulet Patate", // A saisir via le front
+    "description": "C'est un poulet au patate", // A saisir via le front
+    "image": "https://www.google.com", // A saisir via le front
+    "category": "meal", // A saisir via le front
+    "stockQuantity": "20" // A saisir via le front
+    "price": "15", // A saisir via le front
+    "creationDate": "2023/09/20", // auto généré par le back
+}
+```
+
+## Order
+```json
+{
+    "customerUUID": "gaz56drf4a56z-51aezfaz-azdazza" // Correspond à celui du User connecté
+    "employeUUID": "4546az4d6-456azef-aezf456az" // Correspond au uuid du livreur selectionné
+    "meal": [ tableau d'objet des repas sélectionnés, /!\pensez à rajouter dans l'objet la quantity/!\]
+    "orderDate": "" // auto généré par le back
+    "creationDate": "" // auto généré par le back
+    "uuid": "a5z4d56af4-4aze5f4a-azef", // auto généré par le back
+    "totalAmount": "89.4 EUR", // auto calculé par le back (prend le price et la quantity renseigné et les additionnes)
+    "deliveryFee": "", // auto calculé par le back
+    "status": "", // Voir la liste
+
+
+Liste statuts:
+- CreationInProgress -> Création de la commande et ajout de plat dans le panier (Statut par défaut lors de la création, aucun impact front)
+- CartValidated -> Commande validé, paiement à effectuer ( lorsque le back recois ce statut le calcul du panier et des frais de livraisons se fait)
+- Paid -> Commande payer (a ce moment la le back soustrait les quantités commandés des quantités en stock pour les plats concernés)
+- Delivered -> Commande livrée
+}
+```
+
 # Les API
 
 ## User
