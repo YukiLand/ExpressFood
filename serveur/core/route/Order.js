@@ -32,10 +32,10 @@ router.post("/create", (req, res) => {
       neworder
         .save()
         .then((order) => res.json(order))
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
       return neworder;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 // @route POST /order/search
@@ -49,7 +49,7 @@ router.post("/search", (req, res) => {
         }
         return res.status(200).json(orders);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   } else if (req.body.uuid != null) {
     OrderSchema.findOne({
       uuid: req.body.uuid,
@@ -60,7 +60,7 @@ router.post("/search", (req, res) => {
         }
         return res.status(200).json(order);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   } else {
     OrderSchema.find({
       category: req.body.category,
@@ -71,7 +71,7 @@ router.post("/search", (req, res) => {
         }
         return res.status(200).json(orders);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }
 });
 
@@ -84,8 +84,14 @@ router.post("/update", (req, res) => {
       if (!order) {
         return res.status(200).json({ message: "order not found" });
       }
+      let totalDue = 0;
+      for (let i = 0; i < order.meal.length; i++) {
+        if (order.meal[i].uuid === req.body.mealUUID) {
+          totalDue = totalDue + req.body.price;
+          break;
+        }
+      }
 
-      console.log("order :>> ", order);
       let orderModified = {
         customer_uuid: req.body.customerUUID,
         employee_uuid: req.body.employeeUUID,
@@ -93,18 +99,16 @@ router.post("/update", (req, res) => {
         uuid: req.body.uuid,
         status: req.body.status,
         orderDate: req.body.orderDate,
+        totalAmount: totalDue,
       };
-
-      console.log("orderModified :>> ", orderModified);
 
       OrderSchema.updateOne({ uuid: order.uuid }, orderModified)
         .then((order) => {
-          console.log("order updated");
           return res.status(200).json(order);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 // @route DELETE /orders/delete
@@ -119,12 +123,11 @@ router.post("/delete", (req, res) => {
       OrderSchema.deleteOne({ uuid: order.uuid })
 
         .then((order) => {
-          console.log("order deleted");
           return res.status(200).json(order);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 module.exports = router;

@@ -20,6 +20,9 @@ const OrderSchema = new mongoose.Schema({
   uuid: {
     type: String,
   },
+  totalAmount: {
+    type: String,
+  },
   status: {
     type: String,
     default: "creationInProgress",

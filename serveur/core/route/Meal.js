@@ -35,25 +35,16 @@ router.post("/create", (req, res) => {
       newMeal
         .save()
         .then((meal) => res.json(meal))
-        .catch((err) => console.log(err));
-      return res.status(200).json({ message: "Meal created" });
+        .catch((err) => console.error(err));
+      return res.status(200).json(newMeal);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 // @route POST /meal/search
 router.post("/search", (req, res) => {
   // if body category is null we return all meals
-  if (req.body.category == null) {
-    MealEntity.find()
-      .then((meals) => {
-        if (!meals) {
-          return res.status(404).json({ message: "No meals found" });
-        }
-        return res.status(200).json(meals);
-      })
-      .catch((err) => console.log(err));
-  } else if (req.body.uuid != null) {
+  if (req.body.uuid != null) {
     MealEntity.findOne({
       uuid: req.body.uuid,
     })
@@ -63,7 +54,16 @@ router.post("/search", (req, res) => {
         }
         return res.status(200).json(meal);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
+  } else if (req.body.category == null) {
+    MealEntity.find()
+      .then((meals) => {
+        if (!meals) {
+          return res.status(404).json({ message: "No meals found" });
+        }
+        return res.status(200).json(meals);
+      })
+      .catch((err) => console.error(err));
   } else {
     MealEntity.find({
       category: req.body.category,
@@ -74,7 +74,7 @@ router.post("/search", (req, res) => {
         }
         return res.status(200).json(meals);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }
 });
 
@@ -97,12 +97,11 @@ router.post("/update", (req, res) => {
       };
       MealEntity.updateOne({ uuid: meal.uuid, mealModified })
         .then((meal) => {
-          console.log("Meal updated");
           return res.status(200).json(meal);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 // @route DELETE /meals/delete
@@ -117,12 +116,11 @@ router.post("/delete", (req, res) => {
       MealEntity.deleteOne({ uuid: meal.uuid })
 
         .then((meal) => {
-          console.log("meal deleted");
           return res.status(200).json(meal);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 module.exports = router;

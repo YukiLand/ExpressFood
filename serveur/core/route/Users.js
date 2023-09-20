@@ -32,13 +32,13 @@ router.post("/login", (req, res) => {
       //update the user with the new token
       UsersEntity.updateOne({ uuid: user.uuid }, { token: token })
         .then((user) => {
-          console.log("user updated");
+          return res.status(200).json(user);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
 
       return res.status(200).json(token);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 // @route POST /signup
@@ -54,7 +54,6 @@ router.post("/signup", (req, res) => {
       }
       // Create a new user
       let uuid = crypto.randomUUID();
-      console.log("uuid :>> ", uuid);
       const newUser = new UsersEntity({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -66,10 +65,10 @@ router.post("/signup", (req, res) => {
       newUser
         .save()
         .then((user) => res.json(user))
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
       return res.status(200).json({ message: "User created" });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 // @route POST /check/token
@@ -86,7 +85,7 @@ router.post("/check/token", (req, res) => {
       // else we return the token
       return res.status(200).json({ message: "Token valid" });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 // @route POST /users/get
@@ -110,7 +109,7 @@ router.post("/get", (req, res) => {
       };
       return res.status(200).json(usrModified);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 // @route POST /users/update
@@ -135,13 +134,12 @@ router.post("/update", (req, res) => {
       };
       UsersEntity.updateOne({ uuid: user.uuid }, userModified);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 // @route DELETE /users/delete
 router.post("/delete", (req, res) => {
   // Check if the user exists
-  console.log("req.body :>> ", req.body);
   UsersEntity.findOne({
     token: req.body.token,
   })
@@ -154,12 +152,11 @@ router.post("/delete", (req, res) => {
       UsersEntity.deleteOne({ _id: user._id })
 
         .then((user) => {
-          console.log("user deleted");
           return res.status(200).json(user);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 });
 
 // route POST /users
