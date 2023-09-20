@@ -85,11 +85,27 @@ router.post("/update", (req, res) => {
         return res.status(200).json({ message: "order not found" });
       }
       let totalDue = 0;
+      let fee = 0;
+      console.log("order.meal.length :>> ", order.meal.length);
       for (let i = 0; i < order.meal.length; i++) {
-        if (order.meal[i].uuid === req.body.mealUUID) {
-          totalDue = totalDue + req.body.price;
-          break;
-        }
+        console.log("i", i);
+        let price = order.meal[i].price;
+        price = price.substring(0, price.length - 4);
+        quantity = order.meal[i].quantity;
+        totalDue = totalDue + price * quantity;
+      }
+
+      if (totalDue >= 19.99) {
+        fee = "Gratuit";
+      } else {
+        fee = "2.99 EUR";
+      }
+
+      if (fee != "Gratuit") {
+        fee = 2.99;
+        totalDue = totalDue + fee + " EUR";
+      } else {
+        totalDue = totalDue + " EUR";
       }
 
       let orderModified = {
@@ -100,11 +116,16 @@ router.post("/update", (req, res) => {
         status: req.body.status,
         orderDate: req.body.orderDate,
         totalAmount: totalDue,
+        deliveryFee: fee,
       };
+
+      if (req.body.status == "paid") {
+      }
 
       OrderSchema.updateOne({ uuid: order.uuid }, orderModified)
         .then((order) => {
-          return res.status(200).json(order);
+          console.log("order :>> ", order);
+          return res.status(200).json(orderModified);
         })
         .catch((err) => console.error(err));
     })
