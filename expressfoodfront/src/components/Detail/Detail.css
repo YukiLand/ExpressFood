@@ -1,0 +1,14 @@
+.detail{
+    padding-top: 15vh;
+    width: 90%;
+    margin: 0 auto;
+}
+.detail-img{
+    width: 90%;
+    height: 50vh;
+    object-fit: cover;
+}
+
+.detail-quantite {
+    width: 90%;
+}
