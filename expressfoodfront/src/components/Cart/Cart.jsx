@@ -17,12 +17,11 @@ function Cart() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ uuid: '6fc46277-49f7-448b-af40-960ff1258d46' })
+                body: JSON.stringify({ customerUUID: '6fc46277-49f7-448b-af40-960ff1258d46' })
             });
             const data = await response.json();
-            setOrder(data[1].meal);
-
-            const totalPrices = data[1].meal.map((item) => parseFloat(item.price) * item.quantity);
+            setOrder(data[0].meal);
+            const totalPrices = data[0].meal.map((item) => parseFloat(item.price) * item.quantity);
             const totalPrice = totalPrices.reduce((a, b) => a + b, 0);
             setTotalPrice(totalPrice);
         }
@@ -30,7 +29,6 @@ function Cart() {
         getOrder();
 
     }, [])
-
 
    return (
         <div className="cart">

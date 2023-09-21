@@ -29,8 +29,6 @@ function Product() {
         getProducts();
     }, [])
 
-    console.log(products);
-
     return (
         <div className="product">
             <Box sx={{ flexGrow: 1 }}>
