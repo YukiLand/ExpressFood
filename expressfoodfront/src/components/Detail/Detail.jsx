@@ -44,7 +44,7 @@ function Detail() {
     }, [id])
 
     function updateQuantity(e) {
-        setQuantity(e.target.value);
+        setQuantity(parseInt(e.target.value));
     }
 
     const addToCart = async () => {
@@ -75,33 +75,50 @@ function Detail() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ uuid: '6fc46277-49f7-448b-af40-960ff1258d46' })
+                body: JSON.stringify({ customerUUID: '6fc46277-49f7-448b-af40-960ff1258d46' })
             });
             const data = await oldOrder.json();
-            console.log(data);
+            const oldMeal = data[0].meal;
 
-        //     const updateOrder = {
-        //         customerUUID: '6fc46277-49f7-448b-af40-960ff1258d46',
-        //         meal: {
-        //             name: name,
-        //             uuid: id,
-        //             description: description,
-        //             image: image,
-        //             category: category,
-        //             quantity: quantity,
-        //             price: price,
-        //         }
-        //     }
+            const newMeal = {
+                name: name,
+                uuid: id,
+                description: description,
+                image: image,
+                category: category,
+                quantity: quantity,
+                price: price,
+            }
 
-        //     console.log(updateOrder);
-        //     const response = fetch(`http://localhost:8000/order/update`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(updateOrder)
-        //     });
-        //     console.log(response);
+            let mealUpdated = false;
+
+            // Si le meal existe déjà dans la commande, on met à jour la quantité
+            const updatedMeals = oldMeal.map((meal) => {
+                if (meal.uuid === newMeal.uuid) {
+                    
+                    meal.quantity += parseInt(newMeal.quantity);
+                    mealUpdated = true;
+                }
+                return meal;
+            });
+            
+            // Si le meal n'existe pas dans la commande, on l'ajoute
+            if (!mealUpdated) {
+                updatedMeals.push(newMeal);
+            }
+            
+            const updateOrder = {
+                uuid: '09a8d6fe-a06a-4946-aec1-178bf0ae0663',
+                meal: updatedMeals,
+            };
+
+            const response = await fetch(`http://localhost:8000/order/update`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateOrder)
+            });
         }
     }
 
