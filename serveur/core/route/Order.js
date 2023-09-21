@@ -5,6 +5,7 @@ const crypto = require("crypto");
 
 // Model User
 const OrderSchema = require("../entity/OrderSchema");
+const MealSchema = require("../entity/MealSchema");
 // const UsersService = require("../service/UsersService");
 // let service = new UsersService();
 
@@ -120,6 +121,35 @@ router.post("/update", (req, res) => {
       };
 
       if (req.body.status == "paid") {
+        // for each different meal in the order we have to substrac the quantity ordered to the quantity available on the meal
+        for (let i = 0; i < order.meal.length; i++) {
+          // find the meal in the database
+          MealSchema.findOne({
+            uuid: order.meal[i].uuid,
+          })
+            .then((meal) => {
+              if (!meal) {
+                return res.status(200).json({ message: "meal not found" });
+              }
+              // update the quantity of the meal
+              let mealModified = {
+                uuid: meal.uuid,
+                name: meal.name,
+                description: meal.description,
+                image: meal.image,
+                category: meal.category,
+                stockQuantity: meal.stockQuantity - order.meal[i].quantity,
+                price: meal.price,
+              };
+              MealSchema.updateOne({ uuid: meal.uuid }, mealModified)
+
+                .then((meal) => {
+                  return res.status(200).json(mealModified);
+                })
+                .catch((err) => console.error(err));
+            })
+            .catch((err) => console.error(err));
+        }
       }
 
       OrderSchema.updateOne({ uuid: order.uuid }, orderModified)

@@ -17,7 +17,7 @@ const MealSchema = new mongoose.Schema({
     type: String,
   },
   stockQuantity: {
-    type: String,
+    type: Number,
   },
   price: {
     type: String,

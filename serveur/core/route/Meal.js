@@ -30,6 +30,7 @@ router.post("/create", (req, res) => {
         image: req.body.image,
         category: req.body.category,
         uuid: crypto.randomUUID(),
+        stockQuantity: req.body.stockQuantity,
         price: req.body.price,
       });
       newMeal
@@ -93,13 +94,49 @@ router.post("/update", (req, res) => {
         description: req.body.description,
         image: req.body.image,
         category: req.body.category,
+        stockQuantity: req.body.stockQuantity,
         price: req.body.price,
       };
-      MealEntity.updateOne({ uuid: meal.uuid, mealModified })
+      console.log("mealModified :>> ", mealModified);
+      MealEntity.updateOne({ uuid: meal.uuid }, mealModified)
         .then((meal) => {
           return res.status(200).json(meal);
         })
         .catch((err) => console.error(err));
+    })
+    .catch((err) => console.error(err));
+});
+
+// route Post /meals/random
+router.post("/random", (req, res) => {
+  MealEntity.find()
+    .then((meals) => {
+      if (!meals) {
+        return res.status(404).json({ message: "No meals found" });
+      }
+      // get all category
+      let category = [];
+      for (let i = 0; i < meals.length; i++) {
+        if (!category.includes(meals[i].category)) {
+          category.push(meals[i].category);
+        }
+      }
+      // get 2 meals for each category
+      let mealsRandom = [];
+      for (let i = 0; i < category.length; i++) {
+        let mealsCategory = [];
+        for (let j = 0; j < meals.length; j++) {
+          if (meals[j].category == category[i]) {
+            mealsCategory.push(meals[j]);
+          }
+        }
+        for (let k = 0; k < 2; k++) {
+          let random = Math.floor(Math.random() * mealsCategory.length);
+          mealsRandom.push(mealsCategory[random]);
+          mealsCategory.splice(random, 1);
+        }
+      }
+      return res.status(200).json(mealsRandom);
     })
     .catch((err) => console.error(err));
 });
