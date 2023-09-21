@@ -112,6 +112,35 @@ router.post("/get", (req, res) => {
     .catch((err) => console.error(err));
 });
 
+// @route POST /users/get
+router.post("/get/deliver", (req, res) => {
+  // return all users with role deliver
+  UsersEntity.find({
+    role: "deliver",
+  })
+    .then((users) => {
+      if (!users) {
+        // if the user with this token does not exist in the database we return an error
+        return res.status(200).json({ message: "Users not found" });
+      }
+      // else we return the user
+      let arr = [];
+      for (let user of users) {
+        let usrModified = {
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email: user.email,
+          phonenumber: user.phonenumber,
+          role: user.role,
+          uuid: user.uuid,
+        };
+        arr.push(usrModified);
+      }
+      return res.status(200).json(arr);
+    })
+    .catch((err) => console.error(err));
+});
+
 // @route POST /users/update
 router.post("/update", (req, res) => {
   // Check if the user exists
