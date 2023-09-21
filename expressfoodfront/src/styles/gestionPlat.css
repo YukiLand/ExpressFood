@@ -1,0 +1,12 @@
+/* gestionPlats.css */
+.gestion-plats-container {
+    background-image: url("./src/assets/gestionPlat.png"); /* Remplacez par le chemin de votre image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  

@@ -1,0 +1,12 @@
+/* Utilisez flexbox pour centrer verticalement et horizontalement */
+.inscription-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Occupe toute la hauteur de la vue */
+}
+
+/* Style pour le formulaire */
+.inscription-form {
+  padding: 20px;
+}

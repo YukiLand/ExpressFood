@@ -1,0 +1,59 @@
+/* connexion.css */
+
+/* Style du conteneur principal */
+.connexion-container {
+    display: flex;
+    flex-direction: column; /* Empile les éléments verticalement */
+    justify-content: center; /* Centre verticalement */
+    align-items: center; /* Centre horizontalement */
+    min-height: 100vh;
+    background-color: #ffffff; /* Fond blanc */
+  }
+  
+  /* Style de l'encadré noir au milieu */
+  .connexion-form {
+    padding: 20px;
+    background-color: #000000; /* Couleur de fond noire */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Ombre légère */
+  }
+  
+  /* Style du titre "Connexion" */
+  .connexion-title {
+    color: #ffffff; /* Texte en blanc */
+    margin-top: 0; /* Supprime la marge supérieure par défaut */
+  }
+  
+  /* Style des labels */
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ffffff; /* Texte en blanc */
+  }
+  
+  /* Style des champs de formulaire */
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #cccccc; /* Bordure grise */
+    border-radius: 5px; /* Coins arrondis */
+  }
+  
+  /* Style du bouton de soumission */
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff; /* Couleur de fond bleue */
+    color: #ffffff; /* Texte en blanc */
+    border: none;
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer;
+  }
+  
+  /* Style du bouton de soumission au survol */
+  button[type="submit"]:hover {
+    background-color: #0056b3; /* Couleur de fond bleue au survol */
+  }
+  

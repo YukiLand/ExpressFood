@@ -1,0 +1,44 @@
+/* styles-admin.css */
+
+/* Centrer le contenu verticalement */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Centrer le contenu horizontalement dans le Container */
+  .container-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 64px); /* 64px pour la hauteur de la barre d'applications (AppBar) */
+  }
+  
+  /* Centrer le menu de navigation verticalement */
+  .menu-navigation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  /* Centrer le contenu dans la section principale */
+  .informations-generales {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  /* Centrer le pied de page */
+  .footer {
+    text-align: center;
+    padding: 16px;
+  }
+  
