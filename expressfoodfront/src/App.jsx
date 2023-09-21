@@ -19,6 +19,7 @@ import Admin from './components/Admin';
 import GestionUser from './components/GestionUser';
 import GestionPlat from './components/GestionPlat';
 import Cart from './components/Cart/Cart';
+import Payement from './components/Payement/Payement';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
             <Route path="/detail/:id" element={<Detail />} />
             <Route path="/connexion" element={<Connexion />} />
             <Route path="/inscription" element={<Inscription />} />
+            <Route path="/payement" element={<Payement />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/gestionUser" element={<GestionUser />} />
             <Route path="/gestionPlat" element={<GestionPlat />} />

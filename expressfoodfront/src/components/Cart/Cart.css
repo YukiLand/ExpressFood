@@ -3,3 +3,11 @@
     margin: 0 auto;
     padding-top: 15vh;
 }
+
+.cart-list-text{
+    width: 5vw;
+}
+
+.cart-divider{
+    margin: 0 1vw !important;
+}
