@@ -12,6 +12,9 @@ router.get("/test", (req, res) => {
   res.send("Hello World");
 });
 
+let lastRandomDate = "";
+let lastMealsRandom = [];
+
 // @route POST /create
 router.post("/create", (req, res) => {
   // Check if the user exists
@@ -109,36 +112,45 @@ router.post("/update", (req, res) => {
 
 // route Post /meals/random
 router.post("/random", (req, res) => {
-  MealEntity.find()
-    .then((meals) => {
-      if (!meals) {
-        return res.status(404).json({ message: "No meals found" });
-      }
-      // get all category
-      let category = [];
-      for (let i = 0; i < meals.length; i++) {
-        if (!category.includes(meals[i].category)) {
-          category.push(meals[i].category);
+  console.log("lastRandomDate :>> ", lastRandomDate);
+  // if lastRandomDate day is the same as today we return last mealsRandom
+  if (new Date(lastRandomDate).getDate() == new Date().getDate()) {
+    console.log("lastMealsRandom :>> ", lastMealsRandom);
+    return res.status(200).json(lastMealsRandom);
+  } else {
+    MealEntity.find()
+      .then((meals) => {
+        if (!meals) {
+          return res.status(404).json({ message: "No meals found" });
         }
-      }
-      // get 2 meals for each category
-      let mealsRandom = [];
-      for (let i = 0; i < category.length; i++) {
-        let mealsCategory = [];
-        for (let j = 0; j < meals.length; j++) {
-          if (meals[j].category == category[i]) {
-            mealsCategory.push(meals[j]);
+        // get all category
+        let category = [];
+        for (let i = 0; i < meals.length; i++) {
+          if (!category.includes(meals[i].category)) {
+            category.push(meals[i].category);
           }
         }
-        for (let k = 0; k < 2; k++) {
-          let random = Math.floor(Math.random() * mealsCategory.length);
-          mealsRandom.push(mealsCategory[random]);
-          mealsCategory.splice(random, 1);
+        // get 2 meals for each category
+        let mealsRandom = [];
+        for (let i = 0; i < category.length; i++) {
+          let mealsCategory = [];
+          for (let j = 0; j < meals.length; j++) {
+            if (meals[j].category == category[i]) {
+              mealsCategory.push(meals[j]);
+            }
+          }
+          for (let k = 0; k < 2; k++) {
+            let random = Math.floor(Math.random() * mealsCategory.length);
+            mealsRandom.push(mealsCategory[random]);
+            mealsCategory.splice(random, 1);
+          }
         }
-      }
-      return res.status(200).json(mealsRandom);
-    })
-    .catch((err) => console.error(err));
+        lastRandomDate = Date.now();
+        lastMealsRandom = mealsRandom;
+        return res.status(200).json(mealsRandom);
+      })
+      .catch((err) => console.error(err));
+  }
 });
 
 // @route DELETE /meals/delete
