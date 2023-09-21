@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import {
   Paper,
   Typography,
@@ -208,7 +208,7 @@ const GestionDesUtilisateurs = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {utilisateurs.map((utilisateur, index) => (
+                {utilisateurs.map((utilisateur) => (
                   <TableRow key={utilisateur.id}>
                     <TableCell>{utilisateur.nom}</TableCell>
                     <TableCell>{utilisateur.prenom}</TableCell>

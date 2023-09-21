@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Paper, Typography, TextField, Button, Box, Container } from '@mui/material';
 import '../styles/inscription.css';
-import axios from 'axios'; // Import du fichier CSS
+import axios from 'axios'; // 
 
 const Inscription = () => {
   const [nom, setNom] = useState('');
   const [prenom, setPrenom] = useState('');
   const [email, setEmail] = useState('');
   const [motDePasse, setMotDePasse] = useState('');
+
+// const sert à  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

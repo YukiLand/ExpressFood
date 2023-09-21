@@ -42,8 +42,10 @@ router.post("/create", (req, res) => {
 // @route POST /order/search
 router.post("/search", (req, res) => {
   // if body category is null we return all orders
-  if (req.body.category == null) {
-    OrderSchema.find()
+  if (req.body.customerUUID != null) {
+    OrderSchema.find({
+      customer_uuid: req.body.customerUUID,
+    })
       .then((orders) => {
         if (!orders) {
           return res.status(404).json({ message: "No orders found" });
@@ -60,6 +62,15 @@ router.post("/search", (req, res) => {
           return res.status(404).json({ message: "No order found" });
         }
         return res.status(200).json(order);
+      })
+      .catch((err) => console.error(err));
+  } else if (req.body.category == null) {
+    OrderSchema.find()
+      .then((orders) => {
+        if (!orders) {
+          return res.status(404).json({ message: "No orders found" });
+        }
+        return res.status(200).json(orders);
       })
       .catch((err) => console.error(err));
   } else {

@@ -18,6 +18,7 @@ import Inscription from './components/Inscription';
 import Admin from './components/Admin';
 import GestionUser from './components/GestionUser';
 import GestionPlat from './components/GestionPlat';
+import Cart from './components/Cart/Cart';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path="/admin" element={<Admin />} />
             <Route path="/gestionUser" element={<GestionUser />} />
             <Route path="/gestionPlat" element={<GestionPlat />} />
+            <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>
       </BrowserRouter>

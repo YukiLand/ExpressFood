@@ -1,5 +1,4 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, Container, Button } from '@mui/material';
+import { AppBar, Typography, Container, Button } from '@mui/material';
 import { Link } from 'react-router-dom'; // Si vous utilisez React Router pour la navigation
 
 const containerStyle = {
