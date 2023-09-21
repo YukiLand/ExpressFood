@@ -58,7 +58,7 @@ Pour démarrer le backend :
 
 Liste statuts:
 - CreationInProgress -> Création de la commande et ajout de plat dans le panier (Statut par défaut lors de la création, aucun impact front)
-- CartValidated -> Commande validé, paiement à effectuer ( lorsque le back recois ce statut le calcul du panier et des frais de livraisons se fait)
+- CartValidated -> Commande validé, paiement à effectuer 
 - Paid -> Commande payer (a ce moment la le back soustrait les quantités commandés des quantités en stock pour les plats concernés)
 - Delivered -> Commande livrée
 }
