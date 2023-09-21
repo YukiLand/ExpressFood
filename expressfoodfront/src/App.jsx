@@ -13,6 +13,7 @@ import Layout from './components/Layout/Layout'
 import Home from './components/Home/Home'
 import Product from './components/Product/Product'
 import Detail from './components/Detail/Detail';
+import Cart from './components/Cart/Cart';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/product" element={<Product />} />
             <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>
       </BrowserRouter>
