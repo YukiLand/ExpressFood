@@ -38,7 +38,7 @@ function Payement() {
         setOrder(data[0]);
         const totalPrices = data[0].meal.map((item) => parseFloat(item.price) * item.quantity);
         const totalPrice = totalPrices.reduce((a, b) => a + b, 0);
-        setTotalPrice(totalPrices);
+        setTotalPrice(totalPrice);
 
         
         if ( totalPrice > 19.99 ) {
