@@ -102,7 +102,6 @@ router.post("/update", (req, res) => {
       for (let i = 0; i < order.meal.length; i++) {
         console.log("i", i);
         let price = order.meal[i].price;
-        price = price.substring(0, price.length - 4);
         quantity = order.meal[i].quantity;
         totalDue = totalDue + price * quantity;
       }
@@ -110,14 +109,14 @@ router.post("/update", (req, res) => {
       if (totalDue >= 19.99) {
         fee = "Gratuit";
       } else {
-        fee = "2.99 EUR";
+        fee = "2.99";
       }
 
       if (fee != "Gratuit") {
         fee = 2.99;
-        totalDue = totalDue + fee + " EUR";
+        totalDue = totalDue + fee;
       } else {
-        totalDue = totalDue + " EUR";
+        totalDue = totalDue;
       }
 
       let orderModified = {
