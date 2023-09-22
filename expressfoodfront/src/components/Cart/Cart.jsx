@@ -118,7 +118,7 @@ function Cart() {
                                 <ListItem secondaryAction={<IconButton edge="end" onClick={() => deleteItem(item.uuid)}> <DeleteIcon /> </IconButton>}>
                                     <ListItemText className="cart-list-text" primary={item.name} />
                                     <Divider className="cart-divider" orientation="vertical" flexItem />                                    
-                                    <TextField value={item.quantity} onChange={ ()=> updateQuantity(item) } size="small" InputProps={{ inputProps: { min: 1, max: 9 } }} label="Quantité" type="number" />
+                                    <TextField value={item.quantity} onChange={ ()=> updateQuantity(item) } size="small" InputProps={{ inputProps: { min: 1, max: 99 } }} label="Quantité" type="number" />
                                     <Divider className="cart-divider" orientation="vertical" flexItem />
                                     <ListItemText className="cart-list-text" primary={`Total: ${parseFloat(item.price) * item.quantity} EUR`} />
                                 </ListItem>

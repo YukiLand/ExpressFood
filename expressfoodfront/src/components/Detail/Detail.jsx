@@ -4,6 +4,7 @@ import './Detail.css'
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+
 function Detail() {
 
     const { id } = useParams();
@@ -120,6 +121,9 @@ function Detail() {
                 body: JSON.stringify(updateOrder)
             });
         }
+
+        window.location.href = "/product?added=true";
+
     }
 
     return (
