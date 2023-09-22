@@ -28,7 +28,7 @@ function Product() {
 
     useEffect(() => {
         async function getProducts() {
-            const response = await fetch('http://localhost:8000/meal/random', {
+            const response = await fetch('http://localhost:8000/meal/search', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
