@@ -22,7 +22,7 @@ function Layout() {
       !currentRoute.startsWith("/product") &&
         !currentRoute.startsWith("/detail") &&
         currentRoute !== "/cart" &&
-        currentRoute !== "/payment" &&
+        currentRoute !== "/payement" &&
         currentRoute !== "/gestionplat" &&
         currentRoute !== "/gestionuser"
     );
