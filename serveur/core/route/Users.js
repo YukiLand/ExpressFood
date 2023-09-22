@@ -202,6 +202,7 @@ router.post("/all", (req, res) => {
         email: user.email,
         phonenumber: user.phonenumber,
         role: user.role,
+        uuid: user.uuid,
       };
       arr.push(usrModified);
     }
