@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import { useState } from 'react';
-import { Paper, Typography, TextField, Button, Box, Container } from '@mui/material';
-import Axios from 'axios';
-import { Link } from 'react-router-dom'; 
-
-const Connexion = () => {
-  const [email, setEmail] = useState('');
-  const [motDePasse, setMotDePasse] = useState('');
-  const [error, setError] = useState('');
-=======
 import React, { useState, useEffect } from "react";
 import {
   Paper,
@@ -28,49 +17,55 @@ const Connexion = () => {
   const [email, setEmail] = useState("");
   const [motDePasse, setMotDePasse] = useState("");
   const [error, setError] = useState("");
->>>>>>> 61b8a14594365c868f960b4de829238e77b581ea
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await Axios.post('http://localhost:8000/user/login', {
+      const response = await Axios.post("http://localhost:8000/user/login", {
+        // Assurez-vous que l'URL correspond à votre backend
         email,
-        motDePasse,
+        password: motDePasse,
       });
 
       if (response.status === 200) {
-        
-        return (
-          <Link to="/product">
-            <Button variant="contained" color="primary" fullWidth>
-              Accéder à la page Produit
-            </Button>
-          </Link>
+        // Authentification réussie, rediriger l'utilisateur vers une autre page
+        // Exemple : window.location.href = '/tableau-de-bord';
+        alert("Authentification réussie");
+        console.log("response :>> ", response);
+        localStorage.setItem(
+          "actualUserRole",
+          JSON.stringify(response.data.role)
         );
+        // go to /product page
+        window.location.href = "/product";
       } else {
-        setError('Authentification échouée. Vérifiez vos informations d\'identification.');
+        // Afficher un message d'erreur en cas d'échec de l'authentification
+        setError(
+          "Authentification échouée. Vérifiez vos informations d'identification."
+        );
       }
     } catch (error) {
-      console.error('Erreur lors de l\'authentification :', error);
-      setError('Une erreur est survenue lors de l\'authentification.');
+      // Gérer les erreurs de requête
+      console.error("Erreur lors de l'authentification :", error);
+      setError("Une erreur est survenue lors de l'authentification.");
     }
   };
 
   const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    backgroundImage: 'url("./src/assets/imageConnexion.png")',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "100vh",
+    backgroundImage: 'url("./src/assets/imageConnexion.png")', // Remplacez "url_de_votre_image.jpg" par le chemin de votre image
+    backgroundSize: "cover", // Pour ajuster la taille de l'image en fonction du conteneur
+    backgroundPosition: "center", // Pour centrer l'image
   };
 
   return (
     <div style={containerStyle}>
       <Container maxWidth="xs">
-        <Paper elevation={3} style={{ padding: '20px' }}>
+        <Paper elevation={3} style={{ padding: "20px" }}>
           <Typography variant="h5" component="h2" gutterBottom>
             Connexion
           </Typography>
@@ -97,7 +92,12 @@ const Connexion = () => {
             />
             {error && <div className="error-message">{error}</div>}
             <Box mt={2}>
-              <Button type="submit" variant="contained" color="primary" fullWidth>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+              >
                 Se connecter
               </Button>
             </Box>
