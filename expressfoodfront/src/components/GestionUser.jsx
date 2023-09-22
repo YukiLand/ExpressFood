@@ -68,10 +68,11 @@ const GestionDesUtilisateurs = () => {
   const ajouterUtilisateur = async () => {
     try {
       const response = await axios.post('http://localhost:8000/user/signup', {
-        nom,
-        prenom,
+        lastname: nom,
+        firstname:prenom,
         email,
         role,
+        password: motdepasse,
       });
 
       if (response.status === 200) {
@@ -236,8 +237,33 @@ const GestionDesUtilisateurs = () => {
         </div>
 
         <Dialog open={dialogAjoutOuvert} onClose={() => setDialogAjoutOuvert(false)}>
-          {/* ... (Code pour ajouter un utilisateur) */}
-        </Dialog>
+  <DialogTitle>Ajouter un utilisateur</DialogTitle>
+  <DialogContent>
+    <TextField label="Nom" fullWidth margin="normal" value={nom} onChange={(e) => setNom(e.target.value)} />
+    <TextField label="Prénom" fullWidth margin="normal" value={prenom} onChange={(e) => setPrenom(e.target.value)} />
+    <TextField label="Email" fullWidth margin="normal" value={email} onChange={(e) => setEmail(e.target.value)} />
+    <TextField
+      select
+      label="Rôle"
+      fullWidth
+      margin="normal"
+      value={role}
+      onChange={(e) => setRole(e.target.value)}
+    >
+      <MenuItem value="Livreur">Livreur</MenuItem>
+      <MenuItem value="Utilisateur">Utilisateur</MenuItem>
+    </TextField>
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={() => setDialogAjoutOuvert(false)} color="primary">
+      Annuler
+    </Button>
+    <Button onClick={() => ajouterUtilisateur()} color="primary">
+      Ajouter
+    </Button>
+  </DialogActions>
+</Dialog>
+
 
         <Dialog open={dialogModificationOuvert} onClose={() => setDialogModificationOuvert(false)}>
           <DialogTitle>Modifier un utilisateur</DialogTitle>
