@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import "./Cart.css";
+import { Link } from "react-router-dom";
 
 function Cart() {
 
@@ -87,6 +88,24 @@ function Cart() {
         setTotalPrice(totalPrice);
     }
 
+    function goPayement() {
+        window.location.href = "/payement";
+
+        // const updateOrder = {
+        //     uuid: '09a8d6fe-a06a-4946-aec1-178bf0ae0663',
+        //     status: 'CartValidated'
+        // };
+
+
+        // const response = fetch(`http://localhost:8000/order/update`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(updateOrder)
+        // });
+    }
+
 
     return (
         <div className="cart">
@@ -110,7 +129,7 @@ function Cart() {
                 </Grid>
                 <Grid border={1} padding={2} item direction='column' alignItems='flex-start' justifyContent='center' xs={1} sm={1} md={4}>
                     <h2>Montant de la commande: {totalPrice} € </h2>
-                    <Button variant="contained">Passer au paiement</Button>
+                    <Button onClick={goPayement} variant="contained">Passer au paiement</Button>
                 </Grid>
             </Grid>
         </div>
