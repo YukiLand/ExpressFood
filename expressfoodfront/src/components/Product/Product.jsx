@@ -17,7 +17,7 @@ function Product() {
 
     useEffect (() => {
         async function getProducts() {
-            const response = await fetch('http://localhost:8000/meal/search', {
+            const response = await fetch('http://localhost:8000/meal/random', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -29,29 +29,27 @@ function Product() {
         getProducts();
     }, [])
 
-    console.log(products);
-
     return (
         <div className="product">
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container columns={{ xs: 1, sm: 8, md: 12 }}>
-                    {products.map((meal, index) => (
+                    {products.map((meal, index) => (                        
                         <Grid spacing={2} className='grid-card' xs={1} sm={4} md={6} key={index}>
                             <Card sx={{ maxWidth: 345 }}>
-                                <CardMedia component="img" sx={{ maxHeight: 200, width:345 }} image={ meal.image } />
+                                <CardMedia component="img" sx={{ maxHeight: 200, width:345 }} image={ meal?.image } />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
-                                        {meal.name}
+                                        {meal?.name}
                                     </Typography>
                                     <Typography variant="body1" color="text.secondary">
-                                        {meal.price} €
+                                        {meal?.price} €
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
-                                        {meal.description}
+                                        {meal?.description}
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Link to={`/detail/${meal.uuid}`}><Button  size="small">Commander</Button></Link>
+                                    <Link to={`/detail/${meal?.uuid}`}><Button  size="small">Commander</Button></Link>
                                 </CardActions>
                             </Card>
                         </Grid>
