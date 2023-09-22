@@ -100,8 +100,8 @@ const GestionDesPlats = () => {
   
 
   const modifierPlat = (plat) => {
-    setPlatAModifier({ ...plat }); // Copiez l'objet plat pour éviter de modifier l'objet original
-    setModifierIndex(plats.findIndex((p) => p.uuid === plat.uuid)); // Trouvez l'index du plat à modifier
+    setPlatAModifier({ ...plat }); 
+    setModifierIndex(plats.findIndex((p) => p.uuid === plat.uuid)); 
     setDialogModificationOuvert(true);
   };
 

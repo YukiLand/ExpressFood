@@ -31,31 +31,23 @@ const GestionDesUtilisateurs = () => {
   const [role, setRole] = useState("");
   const [modifierIndex, setModifierIndex] = useState(-1);
   const [dialogAjoutOuvert, setDialogAjoutOuvert] = useState(false);
-  const [dialogModificationOuvert, setDialogModificationOuvert] =
-    useState(false);
+  const [dialogModificationOuvert, setDialogModificationOuvert] = useState(false);
   const [snackbarOuvert, setSnackbarOuvert] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [
-    utilisateurEnCoursDeModification,
-    setUtilisateurEnCoursDeModification,
-  ] = useState(null);
+  const [utilisateurEnCoursDeModification, setUtilisateurEnCoursDeModification] = useState(null);
 
-  // Utilisez useEffect pour charger la liste des utilisateurs lors du chargement initial
   useEffect(() => {
     async function chargerUtilisateurs() {
       try {
         const response = await axios.post("http://localhost:8000/user/all");
         if (response.status === 200) {
-          // La réponse contient un tableau d'utilisateurs avec les propriétés spécifiées
           const utilisateurs = response.data.map((utilisateur) => ({
-            id: utilisateur.uuid, // Ajoutez l'ID de l'utilisateur
+            id: utilisateur.uuid,
             nom: utilisateur.lastname,
             prenom: utilisateur.firstname,
             email: utilisateur.email,
             role: utilisateur.role,
           }));
-
-          // Mise à jour de l'état utilisateurs avec les données récupérées
           setUtilisateurs(utilisateurs);
         } else {
           alert("Impossible de charger la liste des utilisateurs.");
@@ -67,7 +59,7 @@ const GestionDesUtilisateurs = () => {
     }
 
     chargerUtilisateurs();
-  }, []); // Le tableau vide signifie que cela ne doit être exécuté qu'une seule fois au chargement initial
+  }, []);
 
   const ajouterUtilisateur = async () => {
     try {
@@ -76,13 +68,10 @@ const GestionDesUtilisateurs = () => {
         firstname: prenom,
         email,
         role,
-        password: motdepasse,
       });
 
       if (response.status === 200) {
-        // Inscription réussie, vous pouvez rediriger l'utilisateur ou effectuer d'autres actions
         alert("Utilisateur ajouté avec succès !");
-        // Mettez à jour la liste des utilisateurs (côté client) en incluant le nouvel utilisateur
         const nouvelUtilisateur = {
           id: response.data.id,
           nom,
@@ -91,18 +80,15 @@ const GestionDesUtilisateurs = () => {
           role,
         };
         setUtilisateurs([...utilisateurs, nouvelUtilisateur]);
-        // Réinitialisez les champs du formulaire
         setNom("");
         setPrenom("");
         setEmail("");
         setRole("");
         setDialogAjoutOuvert(false);
       } else {
-        // Gérez les erreurs d'ajout d'utilisateur, par exemple en affichant un message d'erreur
         alert("L'ajout de l'utilisateur a échoué. Veuillez réessayer.");
       }
     } catch (error) {
-      // Gérez les erreurs de requête
       console.error("Erreur lors de l'ajout de l'utilisateur :", error);
       alert(
         "Une erreur est survenue lors de l'ajout de l'utilisateur. Veuillez réessayer."
@@ -117,17 +103,14 @@ const GestionDesUtilisateurs = () => {
       });
 
       if (response.status === 200) {
-        // Suppression réussie, mettez à jour la liste des utilisateurs (côté client)
         const nouveauxUtilisateurs = utilisateurs.filter(
           (utilisateur) => utilisateur.id !== id
         );
         setUtilisateurs(nouveauxUtilisateurs);
       } else {
-        // Gérez les erreurs de suppression d'utilisateur, par exemple en affichant un message d'erreur
         alert("La suppression de l'utilisateur a échoué. Veuillez réessayer.");
       }
     } catch (error) {
-      // Gérez les erreurs de requête
       console.error("Erreur lors de la suppression de l'utilisateur :", error);
       alert(
         "Une erreur est survenue lors de la suppression de l'utilisateur. Veuillez réessayer."
@@ -164,11 +147,9 @@ const GestionDesUtilisateurs = () => {
         firstname: prenom,
         email,
         role,
-        //   password: motdepasse,
       });
 
       if (response.status === 200) {
-        // Mise à jour réussie
         const nouveauxUtilisateurs = [...utilisateurs];
         const index = utilisateurs.findIndex(
           (u) => u.id === utilisateurEnCoursDeModification.id
@@ -357,55 +338,6 @@ const GestionDesUtilisateurs = () => {
               onClick={() => setDialogModificationOuvert(false)}
               color="primary"
             >
-              Annuler
-            </Button>
-            <Button onClick={() => sauvegarderModification()} color="primary">
-              Sauvegarder
-            </Button>
-          </DialogActions>
-        </Dialog>
-
-        <Dialog
-          open={dialogModificationOuvert}
-          onClose={() => setDialogModificationOuvert(false)}
-        >
-          <DialogTitle>Modifier un utilisateur</DialogTitle>
-          <DialogContent>
-            <TextField
-              label="Nom"
-              fullWidth
-              margin="normal"
-              value={nom}
-              onChange={(e) => setNom(e.target.value)}
-            />
-            <TextField
-              label="Prénom"
-              fullWidth
-              margin="normal"
-              value={prenom}
-              onChange={(e) => setPrenom(e.target.value)}
-            />
-            <TextField
-              label="Email"
-              fullWidth
-              margin="normal"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              select
-              label="Rôle"
-              fullWidth
-              margin="normal"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            >
-              <MenuItem value="deliver">Livreur</MenuItem>
-              <MenuItem value="customer">Utilisateur</MenuItem>
-            </TextField>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => annulerModification(false)} color="primary">
               Annuler
             </Button>
             <Button onClick={() => sauvegarderModification()} color="primary">
