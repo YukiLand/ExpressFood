@@ -143,6 +143,7 @@ router.post("/get/deliver", (req, res) => {
 
 // @route POST /users/update
 router.post("/update", (req, res) => {
+  console.log('in')
   // Check if the user exists
   UsersEntity.findOne({
     uuid: req.body.uuid,
@@ -161,6 +162,7 @@ router.post("/update", (req, res) => {
         role: req.body.role,
         uuid: req.body.uuid,
       };
+      console.log(userModified);
       UsersEntity.updateOne({ uuid: user.uuid }, userModified);
     })
     .catch((err) => console.error(err));
