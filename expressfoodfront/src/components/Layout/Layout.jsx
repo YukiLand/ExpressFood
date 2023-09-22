@@ -28,7 +28,7 @@ function Layout() {
           <img src="/src/assets/logo.png" className="logo" />
           EXPRESS FOOD
         </Link>
-        <div cassName="log-grp">
+        <div className="log-grp">
           {logBtn && (
             <>
               <Link className="log-btn" to="/connexion">

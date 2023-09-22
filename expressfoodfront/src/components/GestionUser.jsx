@@ -145,22 +145,18 @@ const GestionDesUtilisateurs = () => {
   };
 
   const sauvegarderModification = async () => {
-    if (modifierIndex !== -1) {
-      if (
-        nom.trim() !== "" &&
-        prenom.trim() !== "" &&
-        email.trim() !== "" &&
-        role.trim() !== ""
-      ) {
+    setDialogModificationOuvert(false);
+    
         try {
           const response = await axios.post(
             "http://localhost:8000/user/update",
             {
               id: utilisateurEnCoursDeModification.id,
-              nom,
-              prenom,
+              lastname:nom,
+              firstname:prenom,
               email,
               role,
+            //   password: motdepasse,
             }
           );
 
@@ -196,11 +192,7 @@ const GestionDesUtilisateurs = () => {
             "Une erreur est survenue lors de la modification de l'utilisateur. Veuillez réessayer."
           );
         }
-      } else {
-        setSnackbarMessage("Veuillez remplir tous les champs.");
-        setSnackbarOuvert(true);
-      }
-    }
+       
   };
 
   const fermerSnackbar = () => {
@@ -282,8 +274,8 @@ const GestionDesUtilisateurs = () => {
       value={role}
       onChange={(e) => setRole(e.target.value)}
     >
-      <MenuItem value="Livreur">Livreur</MenuItem>
-      <MenuItem value="Utilisateur">Utilisateur</MenuItem>
+      <MenuItem value="deliver">Livreur</MenuItem>
+      <MenuItem value="customer">Utilisateur</MenuItem>
     </TextField>
   </DialogContent>
   <DialogActions>
@@ -329,8 +321,8 @@ const GestionDesUtilisateurs = () => {
               value={role}
               onChange={(e) => setRole(e.target.value)}
             >
-              <MenuItem value="Livreur">Livreur</MenuItem>
-              <MenuItem value="Utilisateur">Utilisateur</MenuItem>
+              <MenuItem value="deliver">Livreur</MenuItem>
+              <MenuItem value="customer">Utilisateur</MenuItem>
             </TextField>
           </DialogContent>
           <DialogActions>
