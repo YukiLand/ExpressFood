@@ -7,11 +7,10 @@ import {
   Box,
   Container,
 } from "@mui/material";
-import Axios from "axios"; // Assurez-vous d'avoir installé Axios
+import Axios from "axios";
 
 const Connexion = () => {
   useEffect(() => {
-    //set actualUserRole to null
     localStorage.setItem("actualUserRole", JSON.stringify(null));
   }, []);
   const [email, setEmail] = useState("");
@@ -23,30 +22,24 @@ const Connexion = () => {
 
     try {
       const response = await Axios.post("http://localhost:8000/user/login", {
-        // Assurez-vous que l'URL correspond à votre backend
         email,
         password: motDePasse,
       });
 
       if (response.status === 200) {
-        // Authentification réussie, rediriger l'utilisateur vers une autre page
-        // Exemple : window.location.href = '/tableau-de-bord';
         alert("Authentification réussie");
         console.log("response :>> ", response);
         localStorage.setItem(
           "actualUserRole",
           JSON.stringify(response.data.role)
         );
-        // go to /product page
         window.location.href = "/product";
       } else {
-        // Afficher un message d'erreur en cas d'échec de l'authentification
         setError(
           "Authentification échouée. Vérifiez vos informations d'identification."
         );
       }
     } catch (error) {
-      // Gérer les erreurs de requête
       console.error("Erreur lors de l'authentification :", error);
       setError("Une erreur est survenue lors de l'authentification.");
     }
@@ -57,9 +50,9 @@ const Connexion = () => {
     justifyContent: "center",
     alignItems: "center",
     minHeight: "100vh",
-    backgroundImage: 'url("./src/assets/imageConnexion.png")', // Remplacez "url_de_votre_image.jpg" par le chemin de votre image
-    backgroundSize: "cover", // Pour ajuster la taille de l'image en fonction du conteneur
-    backgroundPosition: "center", // Pour centrer l'image
+    backgroundImage: 'url("./src/assets/imageConnexion.png")',
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   };
 
   return (

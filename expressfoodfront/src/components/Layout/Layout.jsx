@@ -29,7 +29,8 @@ function Layout() {
   }, [currentRoute]);
 
   useEffect(() => {
-    if (userRole === "admin" && userRole != null) {
+    console.log("location.pathname  :>> ", location.pathname);
+    if (userRole === "admin" && userRole != null && currentRoute != "/") {
       setAdminBtn(true);
     } else {
       setAdminBtn(false);
@@ -37,7 +38,7 @@ function Layout() {
   }, []);
 
   useEffect(() => {
-    if (userRole === "admin" && userRole != null) {
+    if (userRole === "admin" && userRole != null && currentRoute != "/") {
       setAdminBtn(true);
     } else {
       setAdminBtn(false);
