@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Paper,
   Typography,
@@ -17,6 +17,11 @@ const Inscription = () => {
   const [motDePasse, setMotDePasse] = useState("");
 
   // const sert à
+
+  useEffect(() => {
+    //set actualUserRole to null
+    localStorage.setItem("actualUserRole", JSON.stringify(null));
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

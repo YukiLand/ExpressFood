@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Paper,
   Typography,
@@ -10,6 +10,10 @@ import {
 import Axios from "axios"; // Assurez-vous d'avoir installé Axios
 
 const Connexion = () => {
+  useEffect(() => {
+    //set actualUserRole to null
+    localStorage.setItem("actualUserRole", JSON.stringify(null));
+  }, []);
   const [email, setEmail] = useState("");
   const [motDePasse, setMotDePasse] = useState("");
   const [error, setError] = useState("");
