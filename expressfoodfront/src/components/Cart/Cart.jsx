@@ -1,6 +1,7 @@
-import { Button, Divider, Grid, IconButton, List, ListItem, ListItemText, TextField } from "@mui/material";
+import { Button, Divider, Grid, IconButton, List, ListItem, ListItemText, TextField, Paper } from "@mui/material";
 import { forwardRef, useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { styled } from '@mui/material/styles';
 
 import "./Cart.css";
 
@@ -10,6 +11,12 @@ import MuiAlert from '@mui/material/Alert';
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+
+const DemoPaper = styled(Paper)(({ theme }) => ({
+    padding: theme.spacing(5),
+    ...theme.typography.body2,
+    textAlign: 'center',
+}));
 
 function Cart() {
 
@@ -102,7 +109,7 @@ function Cart() {
 
         setOpen(false);
     };
-console.log(order);
+    console.log(order);
     function goPayement() {
 
         if (order.length > 0) {
@@ -130,28 +137,30 @@ console.log(order);
     return (
         <div className="cart">
             <h1>Détail de la commande</h1>
-            <Grid container justifyContent='space-between' columns={{ xs: 1, sm: 1, md: 12 }}>
-                <Grid item xs={1} sm={1} md={7}>
-                    <List>
-                        {order.map((item, index) => (
-                            <div key={index}>
-                                <ListItem secondaryAction={<IconButton edge="end" onClick={() => deleteItem(item.uuid)}> <DeleteIcon /> </IconButton>}>
-                                    <ListItemText className="cart-list-text" primary={item.name} />
-                                    <Divider className="cart-divider" orientation="vertical" flexItem />
-                                    <TextField value={item.quantity} onChange={() => updateQuantity(item)} size="small" InputProps={{ inputProps: { min: 1, max: 99 } }} label="Quantité" type="number" />
-                                    <Divider className="cart-divider" orientation="vertical" flexItem />
-                                    <ListItemText className="cart-list-text" primary={`Total: ${parseFloat(item.price) * item.quantity} EUR`} />
-                                </ListItem>
-                                <Divider />
-                            </div>
-                        ))}
-                    </List>
+            <DemoPaper square={false}>
+                <Grid container justifyContent='space-between' columns={{ xs: 1, sm: 1, md: 12 }}>
+                    <Grid item xs={1} sm={1} md={7}>
+                        <List>
+                            {order.map((item, index) => (
+                                <div key={index}>
+                                    <ListItem secondaryAction={<IconButton edge="end" onClick={() => deleteItem(item.uuid)}> <DeleteIcon /> </IconButton>}>
+                                        <ListItemText className="cart-list-text" primary={item.name} />
+                                        <Divider className="cart-divider" orientation="vertical" flexItem />
+                                        <TextField value={item.quantity} onChange={() => updateQuantity(item)} size="small" InputProps={{ inputProps: { min: 1, max: 99 } }} label="Quantité" type="number" />
+                                        <Divider className="cart-divider" orientation="vertical" flexItem />
+                                        <ListItemText className="cart-list-text" primary={`Total: ${parseFloat(item.price) * item.quantity} EUR`} />
+                                    </ListItem>
+                                    <Divider />
+                                </div>
+                            ))}
+                        </List>
+                    </Grid>
+                    <Grid border={1} padding={2} item direction='column' alignItems='flex-start' justifyContent='center' xs={1} sm={1} md={4}>
+                        <h2>Montant de la commande: {totalPrice} € </h2>
+                        <Button onClick={goPayement} variant="contained">Passer au paiement</Button>
+                    </Grid>
                 </Grid>
-                <Grid border={1} padding={2} item direction='column' alignItems='flex-start' justifyContent='center' xs={1} sm={1} md={4}>
-                    <h2>Montant de la commande: {totalPrice} € </h2>
-                    <Button onClick={goPayement} variant="contained">Passer au paiement</Button>
-                </Grid>
-            </Grid>
+            </DemoPaper>
             <Snackbar anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }} open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                     Attention votre panier est vide !
