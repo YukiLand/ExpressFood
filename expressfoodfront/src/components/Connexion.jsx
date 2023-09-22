@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react';
 import { Paper, Typography, TextField, Button, Box, Container } from '@mui/material';
 import Axios from 'axios';
@@ -7,6 +8,27 @@ const Connexion = () => {
   const [email, setEmail] = useState('');
   const [motDePasse, setMotDePasse] = useState('');
   const [error, setError] = useState('');
+=======
+import React, { useState, useEffect } from "react";
+import {
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Container,
+} from "@mui/material";
+import Axios from "axios"; // Assurez-vous d'avoir installé Axios
+
+const Connexion = () => {
+  useEffect(() => {
+    //set actualUserRole to null
+    localStorage.setItem("actualUserRole", JSON.stringify(null));
+  }, []);
+  const [email, setEmail] = useState("");
+  const [motDePasse, setMotDePasse] = useState("");
+  const [error, setError] = useState("");
+>>>>>>> 61b8a14594365c868f960b4de829238e77b581ea
 
   const handleSubmit = async (e) => {
     e.preventDefault();

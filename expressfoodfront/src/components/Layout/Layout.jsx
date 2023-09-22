@@ -29,12 +29,20 @@ function Layout() {
   }, [currentRoute]);
 
   useEffect(() => {
-    if (userRole === "admin") {
+    if (userRole === "admin" && userRole != null) {
       setAdminBtn(true);
     } else {
       setAdminBtn(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (userRole === "admin" && userRole != null) {
+      setAdminBtn(true);
+    } else {
+      setAdminBtn(false);
+    }
+  }, [userRole]);
 
   return (
     <>
