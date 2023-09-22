@@ -5,6 +5,7 @@ const crypto = require("crypto");
 
 // Model User
 const UsersEntity = require("../entity/UserSchema");
+const UserSchema = require("../entity/UserSchema");
 // const UsersService = require("../service/UsersService");
 // let service = new UsersService();
 
@@ -19,6 +20,7 @@ router.post("/login", (req, res) => {
     email: req.body.email,
     password: req.body.password,
   })
+
     .then((user) => {
       if (!user) {
         //if the user with this combination email/password does not exist in the database we return an error
@@ -35,8 +37,15 @@ router.post("/login", (req, res) => {
           return res.status(200).json(user);
         })
         .catch((err) => console.error(err));
-
-      return res.status(200).json(token);
+      let usrModified = {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        phonenumber: user.phonenumber,
+        role: user.role,
+        uuid: user.uuid,
+      };
+      return res.status(200).json(usrModified);
     })
     .catch((err) => console.error(err));
 });
@@ -143,7 +152,7 @@ router.post("/get/deliver", (req, res) => {
 
 // @route POST /users/update
 router.post("/update", (req, res) => {
-  console.log('in')
+  console.log("in");
   // Check if the user exists
   UsersEntity.findOne({
     uuid: req.body.uuid,
@@ -162,9 +171,13 @@ router.post("/update", (req, res) => {
         role: req.body.role,
         uuid: req.body.uuid,
       };
-      console.log(userModified);
-      UsersEntity.updateOne({ uuid: user.uuid }, userModified);
+      UserSchema.updateOne({ uuid: user.uuid }, userModified)
+        .then((user) => {
+          return res.status(200).json(userModified);
+        })
+        .catch((err) => console.error(err));
     })
+
     .catch((err) => console.error(err));
 });
 

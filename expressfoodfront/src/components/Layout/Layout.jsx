@@ -7,6 +7,11 @@ import "./Layout.css";
 
 function Layout() {
   const location = useLocation();
+  //get from localstorage the value of actualUserRole
+
+  const userRole = JSON.parse(localStorage.getItem("actualUserRole"));
+
+  const [adminBtn, setAdminBtn] = useState(false);
 
   const currentRoute = location.pathname;
 
@@ -17,9 +22,19 @@ function Layout() {
       !currentRoute.startsWith("/product") &&
         !currentRoute.startsWith("/detail") &&
         currentRoute !== "/cart" &&
-        currentRoute !== "/payment"
+        currentRoute !== "/payment" &&
+        currentRoute !== "/gestionplat" &&
+        currentRoute !== "/gestionuser"
     );
   }, [currentRoute]);
+
+  useEffect(() => {
+    if (userRole === "admin") {
+      setAdminBtn(true);
+    } else {
+      setAdminBtn(false);
+    }
+  }, []);
 
   return (
     <>
@@ -49,6 +64,16 @@ function Layout() {
                   {" "}
                   <ShoppingCartIcon />{" "}
                 </IconButton>
+              </Link>
+            </>
+          )}
+          {adminBtn && (
+            <>
+              <Link className="log-btn" to="/gestionuser">
+                <Button variant="outlined">Gestion utilisateur</Button>
+              </Link>
+              <Link className="log-btn" to="/gestionplat">
+                <Button variant="outlined">Gestion plats</Button>
               </Link>
             </>
           )}

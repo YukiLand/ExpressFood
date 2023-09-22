@@ -1,48 +1,66 @@
-import  { useState } from 'react';
-import { Paper, Typography, TextField, Button, Box, Container } from '@mui/material';
-import '../styles/inscription.css';
-import axios from 'axios'; // 
+import { useState } from "react";
+import {
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Container,
+} from "@mui/material";
+import "../styles/inscription.css";
+import axios from "axios"; //
 
 const Inscription = () => {
-  const [nom, setNom] = useState('');
-  const [prenom, setPrenom] = useState('');
-  const [email, setEmail] = useState('');
-  const [motDePasse, setMotDePasse] = useState('');
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [email, setEmail] = useState("");
+  const [motDePasse, setMotDePasse] = useState("");
 
-// const sert à  
+  // const sert à
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const response = await axios.post('http://localhost:8000/user/signup', {
+      const response = await axios.post("http://localhost:8000/user/signup", {
         nom,
         prenom,
         email,
         motDePasse,
       });
-  
+
       if (response.status === 200) {
         // Inscription réussie, vous pouvez rediriger l'utilisateur ou afficher un message de confirmation
-        alert('Inscription réussie !');
+        alert("Inscription réussie !");
         // Rediriger l'utilisateur vers une page de connexion, par exemple
         // history.push('/connexion');
+        window.location = "/connexion";
       } else {
         // Gérer les erreurs d'inscription, par exemple en affichant un message d'erreur
-        alert('L\'inscription a échoué. Veuillez réessayer.');
+        alert("L'inscription a échoué. Veuillez réessayer.");
       }
     } catch (error) {
       // Gérer les erreurs de requête, par exemple en affichant un message d'erreur
-      console.error('Erreur lors de l\'inscription :', error);
-      alert('Une erreur est survenue lors de l\'inscription. Veuillez réessayer.');
+      console.error("Erreur lors de l'inscription :", error);
+      alert(
+        "Une erreur est survenue lors de l'inscription. Veuillez réessayer."
+      );
     }
   };
-  
 
   return (
-    <div className="inscription-container" style={{ backgroundImage: 'url("./src/assets/imageInscription.png")', backgroundSize: 'cover', minHeight: '100vh' }}>
+    <div
+      className="inscription-container"
+      style={{
+        backgroundImage: 'url("./src/assets/imageInscription.png")',
+        backgroundSize: "cover",
+        minHeight: "100vh",
+      }}
+    >
       <Container maxWidth="xs">
-        <Paper elevation={3} className="inscription-form"> {/* Ajout de la classe CSS pour le formulaire */}
+        <Paper elevation={3} className="inscription-form">
+          {" "}
+          {/* Ajout de la classe CSS pour le formulaire */}
           <Typography variant="h5" component="h2" gutterBottom>
             Inscription
           </Typography>
@@ -88,7 +106,12 @@ const Inscription = () => {
               required
             />
             <Box mt={2}>
-              <Button type="submit" variant="contained" color="primary" fullWidth>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+              >
                 S'inscrire
               </Button>
             </Box>

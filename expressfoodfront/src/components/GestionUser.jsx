@@ -71,9 +71,9 @@ const GestionDesUtilisateurs = () => {
 
   const ajouterUtilisateur = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/user/signup', {
+      const response = await axios.post("http://localhost:8000/user/signup", {
         lastname: nom,
-        firstname:prenom,
+        firstname: prenom,
         email,
         role,
         password: motdepasse,
@@ -135,6 +135,16 @@ const GestionDesUtilisateurs = () => {
     }
   };
 
+  const annulerModification = () => {
+    setModifierIndex(-1);
+    setUtilisateurEnCoursDeModification(null);
+    setNom("");
+    setPrenom("");
+    setEmail("");
+    setRole("");
+    setDialogModificationOuvert(false);
+  };
+
   const modifierUtilisateur = (utilisateur) => {
     setUtilisateurEnCoursDeModification(utilisateur);
     setNom(utilisateur.nom);
@@ -146,53 +156,47 @@ const GestionDesUtilisateurs = () => {
 
   const sauvegarderModification = async () => {
     setDialogModificationOuvert(false);
-    
-        try {
-          const response = await axios.post(
-            "http://localhost:8000/user/update",
-            {
-              id: utilisateurEnCoursDeModification.id,
-              lastname:nom,
-              firstname:prenom,
-              email,
-              role,
-            //   password: motdepasse,
-            }
-          );
 
-          if (response.status === 200) {
-            // Mise à jour réussie
-            const nouveauxUtilisateurs = [...utilisateurs];
-            const index = utilisateurs.findIndex(
-              (u) => u.id === utilisateurEnCoursDeModification.id
-            );
-            nouveauxUtilisateurs[index] = {
-              ...utilisateurEnCoursDeModification,
-              nom,
-              prenom,
-              email,
-              role,
-            };
-            setUtilisateurs(nouveauxUtilisateurs);
-            setNom("");
-            setPrenom("");
-            setEmail("");
-            setRole("");
-            setModifierIndex(-1);
-            setDialogModificationOuvert(false);
-          } else {
-            alert("L'opération de modification a échoué. Veuillez réessayer.");
-          }
-        } catch (error) {
-          console.error(
-            "Erreur lors de la modification de l'utilisateur :",
-            error
-          );
-          alert(
-            "Une erreur est survenue lors de la modification de l'utilisateur. Veuillez réessayer."
-          );
-        }
-       
+    try {
+      const response = await axios.post("http://localhost:8000/user/update", {
+        uuid: utilisateurEnCoursDeModification.id,
+        lastname: nom,
+        firstname: prenom,
+        email,
+        role,
+        //   password: motdepasse,
+      });
+
+      if (response.status === 200) {
+        // Mise à jour réussie
+        const nouveauxUtilisateurs = [...utilisateurs];
+        const index = utilisateurs.findIndex(
+          (u) => u.id === utilisateurEnCoursDeModification.id
+        );
+        nouveauxUtilisateurs[index] = {
+          ...utilisateurEnCoursDeModification,
+          nom,
+          prenom,
+          email,
+          role,
+        };
+        setUtilisateurs(nouveauxUtilisateurs);
+        setNom("");
+        setPrenom("");
+        setEmail("");
+        setRole("");
+        setModifierIndex(-1);
+        setUtilisateurEnCoursDeModification(null);
+        setDialogModificationOuvert(false);
+      } else {
+        alert("L'opération de modification a échoué. Veuillez réessayer.");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la modification de l'utilisateur :", error);
+      alert(
+        "Une erreur est survenue lors de la modification de l'utilisateur. Veuillez réessayer."
+      );
+    }
   };
 
   const fermerSnackbar = () => {
@@ -260,36 +264,59 @@ const GestionDesUtilisateurs = () => {
           </Button>
         </div>
 
-        <Dialog open={dialogAjoutOuvert} onClose={() => setDialogAjoutOuvert(false)}>
-  <DialogTitle>Ajouter un utilisateur</DialogTitle>
-  <DialogContent>
-    <TextField label="Nom" fullWidth margin="normal" value={nom} onChange={(e) => setNom(e.target.value)} />
-    <TextField label="Prénom" fullWidth margin="normal" value={prenom} onChange={(e) => setPrenom(e.target.value)} />
-    <TextField label="Email" fullWidth margin="normal" value={email} onChange={(e) => setEmail(e.target.value)} />
-    <TextField
-      select
-      label="Rôle"
-      fullWidth
-      margin="normal"
-      value={role}
-      onChange={(e) => setRole(e.target.value)}
-    >
-      <MenuItem value="deliver">Livreur</MenuItem>
-      <MenuItem value="customer">Utilisateur</MenuItem>
-    </TextField>
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={() => setDialogAjoutOuvert(false)} color="primary">
-      Annuler
-    </Button>
-    <Button onClick={() => ajouterUtilisateur()} color="primary">
-      Ajouter
-    </Button>
-  </DialogActions>
-</Dialog>
+        <Dialog
+          open={dialogAjoutOuvert}
+          onClose={() => setDialogAjoutOuvert(false)}
+        >
+          <DialogTitle>Ajouter un utilisateur</DialogTitle>
+          <DialogContent>
+            <TextField
+              label="Nom"
+              fullWidth
+              margin="normal"
+              value={nom}
+              onChange={(e) => setNom(e.target.value)}
+            />
+            <TextField
+              label="Prénom"
+              fullWidth
+              margin="normal"
+              value={prenom}
+              onChange={(e) => setPrenom(e.target.value)}
+            />
+            <TextField
+              label="Email"
+              fullWidth
+              margin="normal"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              select
+              label="Rôle"
+              fullWidth
+              margin="normal"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <MenuItem value="deliver">Livreur</MenuItem>
+              <MenuItem value="customer">Utilisateur</MenuItem>
+            </TextField>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDialogAjoutOuvert(false)} color="primary">
+              Annuler
+            </Button>
+            <Button onClick={() => ajouterUtilisateur()} color="primary">
+              Ajouter
+            </Button>
+          </DialogActions>
+        </Dialog>
 
-
-        <Dialog open={dialogModificationOuvert} onClose={() => setDialogModificationOuvert(false)}>
+        <Dialog
+          open={dialogModificationOuvert}
+          onClose={() => setDialogModificationOuvert(false)}
+        >
           <DialogTitle>Modifier un utilisateur</DialogTitle>
           <DialogContent>
             <TextField
@@ -373,15 +400,12 @@ const GestionDesUtilisateurs = () => {
               value={role}
               onChange={(e) => setRole(e.target.value)}
             >
-              <MenuItem value="Livreur">Livreur</MenuItem>
-              <MenuItem value="Utilisateur">Utilisateur</MenuItem>
+              <MenuItem value="deliver">Livreur</MenuItem>
+              <MenuItem value="customer">Utilisateur</MenuItem>
             </TextField>
           </DialogContent>
           <DialogActions>
-            <Button
-              onClick={() => setDialogModificationOuvert(false)}
-              color="primary"
-            >
+            <Button onClick={() => annulerModification(false)} color="primary">
               Annuler
             </Button>
             <Button onClick={() => sauvegarderModification()} color="primary">

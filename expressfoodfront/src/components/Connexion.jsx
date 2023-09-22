@@ -21,13 +21,18 @@ const Connexion = () => {
       const response = await Axios.post("http://localhost:8000/user/login", {
         // Assurez-vous que l'URL correspond à votre backend
         email,
-        motDePasse,
+        password: motDePasse,
       });
 
       if (response.status === 200) {
         // Authentification réussie, rediriger l'utilisateur vers une autre page
         // Exemple : window.location.href = '/tableau-de-bord';
         alert("Authentification réussie");
+        console.log("response :>> ", response);
+        localStorage.setItem(
+          "actualUserRole",
+          JSON.stringify(response.data.role)
+        );
         // go to /product page
         window.location.href = "/product";
       } else {
