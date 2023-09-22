@@ -15,6 +15,8 @@ function Payement() {
 
     const [order, setOrder] = useState([]);
     const [deliveryFee, setDeliveryFee] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [total, setTotal] = useState(0);
 
     useEffect(() => {
 
@@ -32,14 +34,21 @@ function Payement() {
         });
         const data = await response.json();
 
-        if (data[0].deliveryFee === 'Gratuit' ) {
-            setDeliveryFee(0);
-        } else {
-            setDeliveryFee(parseFloat(data[0].deliveryFee));
-        }
 
         setOrder(data[0]);
+        const totalPrices = data[0].meal.map((item) => parseFloat(item.price) * item.quantity);
+        const totalPrice = totalPrices.reduce((a, b) => a + b, 0);
+        setTotalPrice(totalPrice);
 
+        
+        if ( totalPrice > 19.99 ) {
+            setDeliveryFee('Gratuit');
+            setTotal(totalPrice);
+        } else {
+            setDeliveryFee(2.99);
+            setTotal(totalPrice + 2.99);
+        }
+        
     }
 
     console.log(order);
@@ -68,9 +77,9 @@ function Payement() {
             <Stack direction="row" spacing={2}>
                 <DemoPaper square={false}>
                     <h2>Récapitulatif de la commande</h2>
-                    <p>Montant de la commande : {order.totalAmount} </p>
-                    <p>Frais de la livraison : {order.deliveryFee} </p>
-                    <p>Total : {parseFloat(order.totalAmount) + deliveryFee} EUR</p>
+                    <p>Montant de la commande : {totalPrice} EUR</p>
+                    <p>Frais de la livraison : {deliveryFee} </p>
+                    <p>Total : {total} EUR</p>
                     <Button onClick={Payement} variant="contained">Payer la commande</Button>
                 </DemoPaper>
             </Stack>
